@@ -4,10 +4,10 @@
 @import url('https://fonts.googleapis.com/css?family=Anton');
 
 body {
-    background-color: #d6d6d6 !important;
-    background-image: url(/assets/bg.jpg);
+    background-image: url('/assets/bg.jpg');
     background-size: cover;
     background-blend-mode: darken;
+    background-color: rgba(0,0,0,.75);
 }
 
 accen-hero-profile > a {
