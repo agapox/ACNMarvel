@@ -11,7 +11,13 @@
         <h3>Descripción</h3>
         <p>{{heroe.description}}</p>
         <p class="modified">{{heroe.modified | date:'fullDate'}}, {{heroe.modified | date:'shortTime'}}</p>
+        <p><button type="button" class="btn btn-primary" (click)="launchModal()">Clasificar</button></p>
+        <p *ngIf="team!=undefined && team!=''">
+          Acabas de clasificar a tu heroe en el equipo
+          <strong [style.color]="heroesService.group_colors[team]">{{team}}</strong>
+        </p>
       </div>
     </div>
   </div>
+  <app-modal-poll (setTeam)="getTeam($event)" [title_modal]="question_modal" [team_selected]="team" #modal></app-modal-poll>
 </ng-container>

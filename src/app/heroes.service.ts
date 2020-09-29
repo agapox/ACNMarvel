@@ -14,6 +14,13 @@ export class HeroesService {
   public page = 0;
   public step = 20;
   public total = 0;
+  public group_colors = {
+    "azul" : "#1f8ff7",
+    "violeta":"#a43de3",
+    "naranjo":"#df5c0f",
+    "verde":"#0ea521"
+  }
+  public teams = new Map();
 
   constructor(private http: HttpClient) { }
 
@@ -38,7 +45,7 @@ export class HeroesService {
             result.modified,
             result.thumbnail,
             result.resourceURI,
-            ''
+            this.getTeamColor(result.id)
           ));
         }
       );
@@ -47,5 +54,14 @@ export class HeroesService {
 
   resetPager() {
     this.page = 0;
+  }
+
+  getTeamColor(id):string{
+    if(this.teams.get(id)!=undefined){
+    return this.teams.get(id);
+    }
+    else{
+    return "";
+    }
   }
 }
