@@ -9,7 +9,10 @@
       </form>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-3" *ngFor="let heroe of heroesService.heroes">
-      <a class="hero-entry" [style.background-image]="'url(' + heroe.thumbnail.path + '.' + heroe.thumbnail.extension + ')'">
+      <a
+        [routerLink]="['/heroe', heroe.id]"
+        class="hero-entry"
+        [style.background-image]="'url(' + heroe.thumbnail.path + '.' + heroe.thumbnail.extension + ')'">
         <span>{{heroe.name}}</span>
       </a>
     </div>
