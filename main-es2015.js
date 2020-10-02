@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h1 class=\"text-center\">{{title}}</h1>\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <form (ngSubmit)=\"submitSearch()\">\r\n        <div class=\"form-group col-xs-12\">\r\n          <input type=\"text\" [(ngModel)]=\"searchString\" name=\"searchString\" class=\"form-control\" id=\"search\" placeholder=\"Búsqueda de super-héroe\">\r\n        </div>\r\n      </form>\r\n    </div>\r\n    <div class=\"col-xs-12 col-sm-6 col-md-3 heroe__item\" *ngFor=\"let heroe of heroesService.heroes\">\r\n      <a [routerLink]=\"'/heroe/' + heroe.id\" class=\"hero-entry\" [style.border-color]=\"heroesService['group_colors'][heroe.teamColor]\" [style.background-image]=\"'url(' + heroe.thumbnail.path + '.' + heroe.thumbnail.extension + ')'\">\r\n        <span [style.background-color]=\"heroesService['group_colors'][heroe.teamColor]\">{{heroe.name}}</span>\r\n      </a>\r\n    </div>\r\n\r\n    <div class=\"paginator col-xs-12\">\r\n      <a class=\"paginator-prev\" (click)=\"prevPage()\" *ngIf=\"heroesService.page > 0\">Prev</a>\r\n      Página {{heroesService.page + 1}} de {{heroesService.total}}\r\n      <a class=\"paginator-next\" (click)=\"nextPage()\" *ngIf=\"heroesService.page < heroesService.total - 1\">Next</a>\r\n    </div>\r\n  </div>\r\n</div>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<h1 class=\"text-center\">{{title}}</h1>\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xs-12\">\r\n      <form (ngSubmit)=\"submitSearch()\">\r\n        <div class=\"form-group col-xs-12\">\r\n          <input type=\"text\" [(ngModel)]=\"searchString\" name=\"searchString\" class=\"form-control\" id=\"search\" placeholder=\"Búsqueda de super-héroe\">\r\n        </div>\r\n      </form>\r\n    </div>\r\n    <div class=\"col-xs-12 col-sm-6 col-md-3 heroe__item\" *ngFor=\"let heroe of heroes\">\r\n      <a [routerLink]=\"'/heroe/' + heroe.id\" class=\"hero-entry\" [style.border-color]=\"heroesService['group_colors'][heroe.teamColor]\" [style.background-image]=\"'url(' + heroe.thumbnail.path + '.' + heroe.thumbnail.extension + ')'\">\r\n        <span [style.background-color]=\"heroesService['group_colors'][heroe.teamColor]\">{{heroe.name}}</span>\r\n      </a>\r\n    </div>\r\n\r\n    <div class=\"paginator col-xs-12\">\r\n      <a class=\"paginator-prev\" (click)=\"prevPage()\" *ngIf=\"page > 0\">Prev</a>\r\n      Página {{page + 1}} de {{totalPages}}\r\n      <a class=\"paginator-next\" (click)=\"nextPage()\" *ngIf=\"page < totalPages - 1\">Next</a>\r\n    </div>\r\n  </div>\r\n</div>\r\n");
 
 /***/ }),
 
@@ -461,37 +461,13 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormsModule"]
         ],
         providers: [],
+        schemas: [
+            _angular_core__WEBPACK_IMPORTED_MODULE_2__["CUSTOM_ELEMENTS_SCHEMA"], _angular_core__WEBPACK_IMPORTED_MODULE_2__["NO_ERRORS_SCHEMA"]
+        ],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
     })
 ], AppModule);
 
-
-
-/***/ }),
-
-/***/ "./src/app/classes/heroe.ts":
-/*!**********************************!*\
-  !*** ./src/app/classes/heroe.ts ***!
-  \**********************************/
-/*! exports provided: Heroe */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Heroe", function() { return Heroe; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-
-class Heroe {
-    constructor(id, name, description, modified, thumbnail, resourceURI, teamColor) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.modified = modified;
-        this.thumbnail = thumbnail;
-        this.resourceURI = resourceURI;
-        this.teamColor = teamColor;
-    }
-}
 
 
 /***/ }),
@@ -523,9 +499,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
-/* harmony import */ var _classes_heroe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../classes/heroe */ "./src/app/classes/heroe.ts");
-/* harmony import */ var _heroes_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../heroes.service */ "./src/app/heroes.service.ts");
-
+/* harmony import */ var _shared_services_heroes_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/services/heroes.service */ "./src/app/shared/services/heroes.service.ts");
 
 
 
@@ -543,7 +517,15 @@ let HeroProfileComponent = class HeroProfileComponent {
             this.id = params.id;
             this.heroesService.getHeroe(this.id).subscribe(data => {
                 const temp = data.data.results[0];
-                this.heroe = new _classes_heroe__WEBPACK_IMPORTED_MODULE_4__["Heroe"](temp.id, temp.name, temp.description, temp.modified, temp.thumbnail, temp.resourceURI, this.heroesService.getTeamColor(temp.id));
+                this.heroe = {
+                    id: temp.id,
+                    name: temp.name,
+                    description: temp.description,
+                    modified: temp.modified,
+                    thumbnail: temp.thumbnail,
+                    resourceURI: temp.resourceURI,
+                    teamColor: this.heroesService.getTeamColor(temp.id)
+                };
                 this.team = this.heroe.teamColor;
             });
         });
@@ -562,7 +544,7 @@ let HeroProfileComponent = class HeroProfileComponent {
 };
 HeroProfileComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
-    { type: _heroes_service__WEBPACK_IMPORTED_MODULE_5__["HeroesService"] },
+    { type: _shared_services_heroes_service__WEBPACK_IMPORTED_MODULE_4__["HeroesService"] },
     { type: _angular_common__WEBPACK_IMPORTED_MODULE_3__["Location"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -575,84 +557,6 @@ HeroProfileComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./hero-profile.component.scss */ "./src/app/hero-profile/hero-profile.component.scss")).default]
     })
 ], HeroProfileComponent);
-
-
-
-/***/ }),
-
-/***/ "./src/app/heroes.service.ts":
-/*!***********************************!*\
-  !*** ./src/app/heroes.service.ts ***!
-  \***********************************/
-/*! exports provided: HeroesService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HeroesService", function() { return HeroesService; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _classes_heroe__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./classes/heroe */ "./src/app/classes/heroe.ts");
-
-
-
-
-let HeroesService = class HeroesService {
-    constructor(http) {
-        this.http = http;
-        this.protocol = 'https:';
-        this.ApiUrl = '//gateway.marvel.com:443/v1/public/';
-        this.APIKEY = '56d2cc44b1c84eb7c6c9673565a9eb4b';
-        this.heroes = [];
-        this.page = 0;
-        this.step = 20;
-        this.total = 0;
-        this.group_colors = {
-            "azul": "#1f8ff7",
-            "violeta": "#a43de3",
-            "naranjo": "#df5c0f",
-            "verde": "#0ea521"
-        };
-        this.teams = new Map();
-    }
-    getHeroe(id) {
-        const url = `${this.protocol}${this.ApiUrl}characters/${id}?apikey=${this.APIKEY}`;
-        return this.http.get(url);
-    }
-    getHeroes(nameStartsWith, page) {
-        if (page || page === 0) {
-            this.page = page;
-        }
-        const url = `${this.protocol}${this.ApiUrl}characters?apikey=${this.APIKEY}&offset=${this.page * this.step}${nameStartsWith ? ('&nameStartsWith=' + nameStartsWith) : ''}`;
-        this.http.get(url).subscribe((data) => {
-            this.heroes = [];
-            this.total = Math.ceil(data.data.total / this.step);
-            data.data.results.forEach(result => {
-                this.heroes.push(new _classes_heroe__WEBPACK_IMPORTED_MODULE_3__["Heroe"](result.id, result.name, result.description, result.modified, result.thumbnail, result.resourceURI, this.getTeamColor(result.id)));
-            });
-        });
-    }
-    resetPager() {
-        this.page = 0;
-    }
-    getTeamColor(id) {
-        if (this.teams.get(id) != undefined) {
-            return this.teams.get(id);
-        }
-        else {
-            return "";
-        }
-    }
-};
-HeroesService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
-];
-HeroesService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])({
-        providedIn: 'root'
-    })
-], HeroesService);
 
 
 
@@ -683,7 +587,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ListadoDeHeroesComponent", function() { return ListadoDeHeroesComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _heroes_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../heroes.service */ "./src/app/heroes.service.ts");
+/* harmony import */ var _shared_services_heroes_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/services/heroes.service */ "./src/app/shared/services/heroes.service.ts");
 
 
 
@@ -692,22 +596,32 @@ let ListadoDeHeroesComponent = class ListadoDeHeroesComponent {
         this.heroesService = heroesService;
         this.title = 'Tutorial de Angular - Héroes de Marvel';
         this.heroes = [];
+        this.page = 0;
+        this.totalPages = 0;
     }
     ngOnInit() {
-        this.heroesService.getHeroes();
+        this.getHeroes();
     }
     submitSearch() {
-        this.heroesService.getHeroes(this.searchString);
+        this.getHeroes(this.searchString);
     }
     prevPage() {
-        this.heroesService.getHeroes(this.searchString, this.heroesService.page - 1);
+        this.getHeroes(this.searchString, this.page - 1);
     }
     nextPage() {
-        this.heroesService.getHeroes(this.searchString, this.heroesService.page + 1);
+        this.getHeroes(this.searchString, this.page + 1);
+    }
+    getHeroes(searchHeroe, page) {
+        this.heroesService.getHeroes(searchHeroe, page).subscribe(data => {
+            console.log(data);
+            this.heroes = data;
+            this.page = this.heroesService.page;
+            this.totalPages = this.heroesService.total;
+        });
     }
 };
 ListadoDeHeroesComponent.ctorParameters = () => [
-    { type: _heroes_service__WEBPACK_IMPORTED_MODULE_2__["HeroesService"] }
+    { type: _shared_services_heroes_service__WEBPACK_IMPORTED_MODULE_2__["HeroesService"] }
 ];
 ListadoDeHeroesComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -779,6 +693,102 @@ ModalPollComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./modal-poll.component.scss */ "./src/app/modal-poll/modal-poll.component.scss")).default]
     })
 ], ModalPollComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/services/heroes.service.ts":
+/*!***************************************************!*\
+  !*** ./src/app/shared/services/heroes.service.ts ***!
+  \***************************************************/
+/*! exports provided: HeroesService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HeroesService", function() { return HeroesService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+
+
+
+
+let HeroesService = class HeroesService {
+    constructor(http) {
+        this.http = http;
+        this.protocol = 'https:';
+        this.ApiUrl = '//gateway.marvel.com:443/v1/public/';
+        this.APIKEY = '56d2cc44b1c84eb7c6c9673565a9eb4b';
+        this.page = 0;
+        this.step = 20;
+        this.total = 0;
+        this.group_colors = {
+            "azul": "#1f8ff7",
+            "violeta": "#a43de3",
+            "naranjo": "#df5c0f",
+            "verde": "#0ea521"
+        };
+        this.teams = new Map();
+    }
+    getHeroe(id) {
+        const url = `${this.protocol}${this.ApiUrl}characters/${id}?apikey=${this.APIKEY}`;
+        return this.http.get(url);
+    }
+    getHeroes(nameStartsWith, page) {
+        if (page || page === 0) {
+            this.page = page;
+        }
+        return this.getHeroesRequest(nameStartsWith, page).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(data => {
+            this.total = Math.ceil(data.data.total / this.step);
+            return data.data.results.map((result) => {
+                return {
+                    id: result.id,
+                    name: result.name,
+                    description: result.description,
+                    modified: result.modified,
+                    thumbnail: result.thumbnail,
+                    resourceURI: result.resourceURI,
+                    teamColor: this.getTeamColor(result.id)
+                };
+            });
+        }));
+    }
+    getPage() {
+        return this.page;
+    }
+    getTotalPages() {
+        return this.total;
+    }
+    getHeroesRequest(nameStartsWith, page) {
+        const url = `${this.protocol}${this.ApiUrl}characters?apikey=${this.APIKEY}&offset=${this.page * this.step}${nameStartsWith ? ('&nameStartsWith=' + nameStartsWith) : ''}`;
+        return this.http.get(url);
+    }
+    getHeroesArr() {
+        return this.heroes;
+    }
+    resetPager() {
+        this.page = 0;
+    }
+    getTeamColor(id) {
+        if (this.teams.get(id) != undefined) {
+            return this.teams.get(id);
+        }
+        else {
+            return "";
+        }
+    }
+};
+HeroesService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
+];
+HeroesService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])({
+        providedIn: 'root'
+    })
+], HeroesService);
 
 
 
